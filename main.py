@@ -1,6 +1,6 @@
 import telebot
 from datetime import datetime
-import hijri_converter as hc
+from hijri_converter import IslamicDate
 import pytz
 import schedule
 import time
@@ -8,7 +8,10 @@ from bs4 import BeautifulSoup
 import requests
 import random
 
+# Telegram bot API token
 api_token = '7458060169:AAHhQ-dTkcuCxSmD8uH0m9bDNpab8boCvOc'
+
+# Initialize Telegram Bot
 bot = telebot.TeleBot(api_token)
 
 def get_random_dua():
@@ -20,7 +23,7 @@ def get_random_dua():
     valid_duas = [dua.text.strip().replace('*', '۞').replace('"', '') for dua in dua_elements if dua.text.strip()]
 
     random_dua = ''
-    while not random_dua or len(random_dua) > 150:
+    while not random_dua or len(random_dua) > 100:
         random_dua = random.choice(valid_duas)
 
     return random_dua
@@ -28,7 +31,8 @@ def get_random_dua():
 def get_current_time():
     tz = pytz.timezone('Africa/Cairo')
     now = datetime.now(tz)
-    hijri_date = hc.Gregorian(now.year, now.month, now.day).to_hijri()
+    hijri_date = IslamicDate(today=True, locale='ar')
+    hijri_date.from_gregorian(now.year, now.month, now.day)
     return now, hijri_date, tz
 
 def arabic_am_pm(time_str):
@@ -57,7 +61,7 @@ def arabic_numerals(text):
     return text
 
 def update_group_info():
-    chat_id = '-1001861299347'
+    chat_id = '-1001661952322'
     now, hijri_date, tz = get_current_time()
     current_time = now.strftime("%I:%M %p")
     current_time_arabic = arabic_am_pm(current_time)
@@ -95,7 +99,7 @@ def update_group_info():
     new_about = f"«{dua}»\n" \
                 "────────────────\n" \
                 f"🕰╽الساعة الان بتوقيت مصر⇜ {current_time_arabic} ؛\n" \
-                f"🌏╽التاريخ ⇜ {gregorian_date} ؛\n" \
+                f"🌏╽التاريخ ⇜ {gregorian_date_arabic} ؛\n" \
                 f"🌈╽اليوم⇜ {arabic_day_names[day_name]} ؛"
     
     # تحديث اسم المجموعة والوصف
