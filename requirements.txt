@@ -3,5 +3,4 @@ pytz
 schedule
 beautifulsoup4
 requests
-hijri-python
 hijri-converter
