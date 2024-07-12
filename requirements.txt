@@ -1,6 +1,7 @@
-beautifulsoup4==4.10.0
-hijri-converter==2.1.0
-pytz==2021.3
-requests==2.26.0
-schedule==1.1.0
-telebot==0.0.4
+telebot
+pytz
+schedule
+beautifulsoup4
+requests
+hijri-python
+hijri-converter
